@@ -167,6 +167,8 @@
     - { name: setuptools, version: "{{ pip_version_setuptools }}", install: "{{ pip_install_setuptools }}" }
     - { name: docker-py, version: "{{ pip_version_docker_py }}", install: "{{ pip_install_docker_py }}" }
     - { name: docker-compose, version: "{{ pip_version_docker_compose }}", install: "{{ pip_install_docker_compose }}" }
+    - { name: docker, version: "{{ pip_version_docker }}", install: "{{ pip_install_docker }}" }
+    
   when: item.install
 
 - name: Check if /etc/updatedb.conf exists

@@ -2,9 +2,35 @@
 # test file for docker.ubuntu role on vagrant
 - hosts: all
   become: yes
-
+  become_method: sudo
   vars:
     docker_group_members: [ '{{ ansible_ssh_user }}' ]
+    docker_opts: "-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock --dns 10.50.0.32 --dns 172.19.109.16 --insecure-registry TRXBUILDMASTER01.int.triax.com:5000"
 
+  tasks:
+    - name: Add ansible user
+      user:
+        name: ansible
+        groups: sudo,admin
+        shell: /bin/bash
+        password: $6$o2sibNoJcjWxYp3K$zO/sG59MntS/FoCMypQMmTNipojECdacwGHRGNfuGqgSYCjH8oajNiCQLcq5yt1ytPxWbxTkj600\
+              6K0xqX9F/0
+    - name: Set no sudo PW for user ansible
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%ansible ALL='
+        line: 'ansible ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
+        
+    - name: Addpublic key to auth keys
+      authorized_key:
+        user: ansible
+        key: "{{ lookup('file', '../../../ssh/ansible_key.pub') }}"
+              
   roles:
-    - docker.ubuntu
+    - ../../docker.ubuntu
+
+
+        
+                      

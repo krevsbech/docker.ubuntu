@@ -39,11 +39,13 @@ pip_install_pip: true
 pip_install_setuptools: true
 pip_install_docker_py: true
 pip_install_docker_compose: true
+pip_install_docker: true
 # Versions for the python packages that are installed
 pip_version_pip: latest
 pip_version_setuptools: latest
-pip_version_docker_py: latest
+pip_version_docker_py: 1.10.6
 pip_version_docker_compose: latest
+pip_version_docker: 2.0.0
 
 # If this variable is set to true kernel updates and host restarts are permitted.
 # Warning: Use with caution in production environments.
